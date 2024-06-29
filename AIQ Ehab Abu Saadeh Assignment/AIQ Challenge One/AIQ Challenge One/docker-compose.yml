@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+  db:
+    container_name: aiq-rest-db
+    restart: always
+    image: aiq-rest-db
+    build:
+      context: ./db
+    volumes:
+      - db:/var/lib/postgresql/data01
+    env_file:
+      - ./.env
+    networks:
+      - network
+    ports:
+      - "5432:5432"
+  api:
+    container_name: aiq-rest
+    restart: always
+    image: aiq-rest
+    build:
+      context: .
+    command: sh -c "npm install && npm run start.dev"
+    env_file:
+      - ./.env
+    # Essential for nodemon restart working
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      - network
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+networks:
+  network:
+
+volumes:
+  db:

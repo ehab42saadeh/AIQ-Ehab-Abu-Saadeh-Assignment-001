@@ -1,0 +1,1 @@
+Both tasks include two folders: one for the Docker image and another for the code. To run the solution, navigate to the Docker image folder for each task and execute the command that publishes the images. Swagger UI will open automatically for testing.
